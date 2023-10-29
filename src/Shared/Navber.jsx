@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/assets/logo.svg";
+import { useContext } from "react";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Navber = () => {
+  const {user,logOut}=useContext(AuthContext)
+  const handleLogOut=()=>{
+    logOut()
+    .then()
+
+  }
+  console.log(user);
   const navlinks = (
     <>
       <li>
@@ -18,6 +27,9 @@ const Navber = () => {
       <li>
         <Link to='/contact'>Contact</Link>
       </li>
+      {user && <li>
+        <Link to='/bookings'>My bookings</Link>
+      </li>}
     </>
   );
   return (
@@ -56,6 +68,7 @@ const Navber = () => {
       </div>
       <div className="navbar-end">
       <button className="btn btn-outline btn-warning">Appointment</button>
+       {user  ? (<button onClick={handleLogOut}>SignOut</button>) :(<Link to={'/login'}>Login</Link>)}
       </div>
     </div>
   );
