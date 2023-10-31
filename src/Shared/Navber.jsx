@@ -10,7 +10,7 @@ const Navber = () => {
     .then()
 
   }
-  console.log(user);
+ 
   const navlinks = (
     <>
       <li>
