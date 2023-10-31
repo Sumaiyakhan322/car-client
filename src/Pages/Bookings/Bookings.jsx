@@ -31,6 +31,29 @@ const Bookings = () => {
       })
     }
   }
+  const handleUpdate=id=>{
+    fetch(`http://localhost:5001/bookings/${id}`,{
+      method:"PATCH",
+      headers:{
+        'content-type':"application/json"
+      },
+      body:JSON.stringify({status:'Confirm'})
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data);
+      if(data.modifiedCount>0){
+        //update state
+        const remaining=bookings.filter(booking=>booking._id !==id)
+
+        const updated=bookings.find(booking=>booking._id ===id)
+        updated.status==='Confirm'
+        const newBooking=[updated, ...remaining]
+        setBookings(newBooking)
+      }
+    })
+   
+  }
 
   // const handleDelete = async (id) => {
   //   const res = await fetch(`http://localhost:5001/bookings/${id}`, {
@@ -68,6 +91,7 @@ const Bookings = () => {
                 key={booking._id}
                 booking={booking}
                 handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
               ></Booking>
             ))}
           </tbody>
